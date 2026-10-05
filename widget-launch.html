@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ta-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>வகுப்பறை உதவியாளர் • தமிழ் பதிப்பு</title>
+<style>
+:root{--teal:#0f766e;--teal2:#e7f7f4;--navy:#17324d;--line:#d7e4e2;--muted:#64748b;--gold:#f59e0b;--blue:#6478b5}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:transparent;font-family:"Noto Sans Tamil","Nirmala UI",Latha,Inter,system-ui,sans-serif;color:var(--navy)}body{padding:0}.palette{position:fixed;inset:0;background:rgba(255,255,255,.985);border:1px solid #cfe0de;border-radius:20px;box-shadow:0 18px 44px rgba(18,32,46,.22);display:flex;flex-direction:column;overflow:hidden}.head{padding:14px 14px 11px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #edf2f2}.brand{width:42px;height:42px;border-radius:13px;background:var(--teal);color:#fff;display:grid;place-items:center;font-size:22px;font-weight:1000;flex:none}.meta{min-width:0;flex:1}.title{font-size:16px;font-weight:1000;letter-spacing:-.01em}.sub{font-size:10px;color:var(--muted);font-weight:800;margin-top:2px}.status{font-size:9px;font-weight:900;padding:5px 8px;border-radius:999px;background:#f1f5f4;color:#42615d;white-space:nowrap}.grid{padding:11px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;overflow:auto;flex:1}.tool{min-height:62px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#fff,#f7fbfa);display:grid;grid-template-columns:36px 1fr 8px;gap:8px;align-items:center;padding:8px 9px;text-align:left;cursor:pointer;box-shadow:0 4px 11px rgba(18,32,46,.04);transition:.12s ease}.tool:hover,.tool:focus-visible{transform:translateY(-1px);border-color:#79c8bc;box-shadow:0 8px 18px rgba(15,118,110,.10);outline:none}.tool.active{background:#eaf8f5;border-color:#0f766e}.icon{font-size:25px;line-height:1}.name{font-size:11px;font-weight:1000;line-height:1.35;color:var(--navy)}.modeDot{width:7px;height:7px;border-radius:99px}.mini .modeDot{background:var(--teal)}.half .modeDot{background:var(--blue)}.full .modeDot{background:var(--gold)}.foot{border-top:1px solid #edf2f2;padding:8px 11px;display:flex;align-items:center;gap:8px}.legend{font-size:8.5px;color:#71807e;font-weight:850;line-height:1.45;flex:1}.close{border:0;border-radius:10px;background:#f2f5f5;color:#49605e;font-weight:1000;padding:7px 10px;cursor:pointer}.toast{position:absolute;left:10px;right:10px;bottom:52px;background:#17324d;color:#fff;border-radius:12px;padding:8px 10px;font-size:11px;font-weight:850;text-align:center;opacity:0;transform:translateY(5px);pointer-events:none;transition:.18s}.toast.show{opacity:1;transform:none}@media(max-width:500px){.palette{border-radius:0}.grid{grid-template-columns:repeat(2,minmax(0,1fr));padding:8px;gap:6px}.tool{min-height:58px;padding:7px}.name{font-size:10px}.head{padding:10px}.status{display:none}}
+</style>
+<script src="https://cdn.counter.dev/script.js" data-id="825e93b6-ce99-40ef-8bcc-125f13297433" data-utcoffset="8"></script>
+</head>
+<body>
+<div class="palette">
+  <header class="head"><div class="brand">✦</div><div class="meta"><div class="title">வகுப்பறை உதவியாளர்</div><div class="sub">ஆசிரியர் கருவிகள் • Created by Lim Kim Sze</div></div><div class="status" id="status">சோதிக்கிறது…</div></header>
+  <main class="grid" id="grid"></main>
+  <div class="toast" id="toast"></div>
+  <footer class="foot"><div class="legend">பச்சை: சிறு கருவி　நீலம்: அரைத் திரை　தங்கம்: முழுத் திரை<br>ஆதரிக்கப்படும் Chrome-இல் சிறு கருவிகள் மேலிருக்கும் மிதக்கும் சாளரமாக திறக்கும்.</div><button class="close" id="closeBtn">மூடு</button></footer>
+</div>
+<script>
+'use strict';
+const TOOLS=[
+ {slug:'timer-calm-music',icon:'⏱️',title:'நேரக்காட்டி + அமைதியான இசை',mode:'mini'},
+ {slug:'transition-countdown',icon:'⏳',title:'மாற்ற நேர பின்னோக்கி எண்ணிக்கை',mode:'mini'},
+ {slug:'attention-signal',icon:'👀',title:'கவன ஈர்ப்பு சைகை',mode:'mini'},
+ {slug:'noise-level',icon:'🔊',title:'குரல் அளவு',mode:'mini'},
+ {slug:'question-spinner',icon:'💬',title:'வாக்கியத் தொடக்கங்கள்',mode:'half'},
+ {slug:'confidence-check',icon:'📈',title:'நம்பிக்கைச் சரிபார்ப்பு',mode:'half'},
+ {slug:'pick-a-pupil',icon:'🎯',title:'மாணவரைத் தேர்ந்தெடு',mode:'mini'},
+ {slug:'make-groups',icon:'👥',title:'குழுக்கள் அமை',mode:'half'},
+ {slug:'brain-break',icon:'🧠',title:'சிறு ஓய்வு',mode:'full'},
+ {slug:'reflect',icon:'💭',title:'கற்றல் சிந்தனை',mode:'half'},
+ {slug:'quote-of-the-day',icon:'✨',title:'இன்றைய ஊக்கவுரை',mode:'full'},
+ {slug:'class-organisation',icon:'🗂️',title:'வகுப்பு ஒழுங்கமைப்பு',mode:'full'},
+ {slug:'daily-duty-roster',icon:'🧹',title:'தினசரி பொறுப்பு அட்டவணை',mode:'full'},
+ {slug:'pupil-reward-points',icon:'⭐',title:'மாணவர் வெகுமதி புள்ளிகள்',mode:'half'},
+ {slug:'group-reward-points',icon:'🏆',title:'குழு வெகுமதி புள்ளிகள்',mode:'half'},
+ {slug:'daily-visual-timetable',icon:'🗓️',title:'தினசரி காட்சி அட்டவணை',mode:'full'}
+];
+const DIRECT={
+ 'class-organisation':'page.html?src='+encodeURIComponent('class-organisation.html'),
+ 'daily-duty-roster':'page.html?src='+encodeURIComponent('daily-duty-roster.html'),
+ 'pupil-reward-points':'page.html?src='+encodeURIComponent('reward-points.html?mode=pupil'),
+ 'group-reward-points':'page.html?src='+encodeURIComponent('reward-points.html?mode=group')
+};
+const grid=document.getElementById('grid'),toast=document.getElementById('toast'),status=document.getElementById('status');
+const buttons=new Map(),windows=new Map();let pip=null,pipSlug='';
+const hasPiP=!!(window.documentPictureInPicture&&typeof window.documentPictureInPicture.requestWindow==='function');
+status.textContent=hasPiP?'✓ மிதக்கும் சாளரம்':'சாதாரண சாளரம்';status.style.background=hasPiP?'#e7f7f4':'#fff4df';status.style.color=hasPiP?'#0f766e':'#8a5b00';
+function say(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>toast.classList.remove('show'),1800)}
+function toolUrl(t){const base=DIRECT[t.slug];return base?base+'&v='+Date.now():'support-tool.html?tool='+encodeURIComponent(t.slug)+'&v='+Date.now()}
+function screenBox(){return{left:Number.isFinite(screen.availLeft)?screen.availLeft:0,top:Number.isFinite(screen.availTop)?screen.availTop:0,w:screen.availWidth||1280,h:screen.availHeight||800}}
+function spec(mode){const s=screenBox();if(mode==='full')return{x:s.left+6,y:s.top+6,w:Math.max(900,s.w-12),h:Math.max(650,s.h-12)};if(mode==='half'){const w=Math.max(620,Math.round(s.w*.52));return{x:s.left+s.w-w-8,y:s.top+8,w,h:Math.max(600,s.h-16)}}const w=Math.min(500,Math.max(410,Math.round(s.w*.3))),h=Math.min(390,Math.max(300,Math.round(s.h*.34)));return{x:s.left+s.w-w-10,y:s.top+10,w,h}}
+function mark(slug,on){buttons.get(slug)?.classList.toggle('active',!!on)}
+async function openPiP(t){
+  if(!hasPiP)return false;
+  try{
+    if(pip&&!pip.closed&&pipSlug===t.slug){try{pip.focus()}catch(e){};return true}
+    if(pip&&!pip.closed){try{pip.close()}catch(e){}}
+    pip=await window.documentPictureInPicture.requestWindow({width:470,height:360});
+    pipSlug=t.slug;mark(t.slug,true);
+    const d=pip.document;d.title=t.title;d.documentElement.style.cssText='margin:0;width:100%;height:100%;overflow:hidden;background:#fff';d.body.style.cssText='margin:0;width:100%;height:100%;overflow:hidden;background:#fff';
+    const f=d.createElement('iframe');f.src=toolUrl(t);f.title=t.title;f.allow='autoplay';f.style.cssText='display:block;width:100%;height:100%;border:0;background:#fff';d.body.replaceChildren(f);
+    pip.addEventListener('pagehide',()=>{mark(t.slug,false);pip=null;pipSlug=''},{once:true});
+    return true;
+  }catch(e){pip=null;pipSlug='';mark(t.slug,false);return false}
+}
+function openPopup(t){
+  const old=windows.get(t.slug);if(old){try{if(!old.closed){old.focus();return}}catch(e){}}
+  const s=spec(t.mode),name='ClassroomCompanionTA_'+t.slug.replace(/[^a-z0-9]/gi,'_');
+  const w=window.open(toolUrl(t),name,`popup=yes,width=${s.w},height=${s.h},left=${s.x},top=${s.y},resizable=yes,scrollbars=yes,toolbar=no,location=no,menubar=no,status=no`);
+  if(!w){say('Pop-up சாளரங்களை அனுமதிக்கவும்');return}
+  windows.set(t.slug,w);mark(t.slug,true);try{w.focus()}catch(e){}
+  setTimeout(()=>{try{w.resizeTo(s.w,s.h);w.moveTo(s.x,s.y)}catch(e){}},120);
+}
+async function openTool(t){
+  if(t.mode==='mini'&&hasPiP){const ok=await openPiP(t);if(ok){say(t.title+' மிதக்கும் சாளரத்தில் திறக்கப்பட்டது');return}}
+  openPopup(t);
+}
+for(const t of TOOLS){const b=document.createElement('button');b.type='button';b.className='tool '+t.mode;b.innerHTML=`<span class="icon">${t.icon}</span><span class="name">${t.title}</span><span class="modeDot"></span>`;b.setAttribute('aria-label',t.title);b.onclick=()=>openTool(t);grid.appendChild(b);buttons.set(t.slug,b)}
+setInterval(()=>{for(const [slug,w] of [...windows]){let closed=true;try{closed=!w||w.closed}catch(e){}if(closed){windows.delete(slug);mark(slug,false)}}},900);
+document.getElementById('closeBtn').onclick=()=>window.close();
+</script>
+</body>
+</html>
