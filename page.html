@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ta-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>வகுப்பறை உதவியாளர் • தமிழ் பதிப்பு</title>
+<style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#fff}iframe{display:block;width:100%;height:100%;border:0;background:#fff}</style>
+</head>
+<body>
+<iframe id="sourceFrame" title="வகுப்பறை உதவியாளர்" allow="autoplay"></iframe>
+<script src="tamil-translate.js?v=20261005ta1"></script>
+<script>
+'use strict';
+const raw=new URLSearchParams(location.search).get('src')||'class-organisation.html';
+const allowed=['class-organisation.html','daily-duty-roster.html','reward-points.html','configure.html','quote.html','brain-break.html','clock.html'];
+let u;try{u=new URL(raw,'https://local.invalid/')}catch(e){u=new URL('class-organisation.html','https://local.invalid/')}
+const file=u.pathname.replace(/^\//,'');
+if(!allowed.includes(file))u=new URL('class-organisation.html','https://local.invalid/');
+const frame=document.getElementById('sourceFrame');
+frame.src='/Classroom-Companion/'+u.pathname.replace(/^\//,'')+u.search+(u.search?'&':'?')+'v='+Date.now();
+frame.addEventListener('load',()=>window.CCTamil?.attach(frame,{page:u.pathname.replace(/^\//,'')}));
+</script>
+</body>
+</html>
