@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ta-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>வகுப்பறை உதவியாளர் • தமிழ் பதிப்பு</title>
+<style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#fff}iframe{display:block;width:100%;height:100%;border:0;background:#fff}</style>
+</head>
+<body>
+<iframe id="sourceFrame" title="வகுப்பறை உதவியாளர்" allow="autoplay"></iframe>
+<script src="tamil-translate.js?v=20261005ta1"></script>
+<script>
+'use strict';
+const p=new URLSearchParams(location.search),tool=p.get('tool')||'timer-calm-music';
+const frame=document.getElementById('sourceFrame');
+frame.src='/Classroom-Companion/support-tool.html?tool='+encodeURIComponent(tool)+'&v='+Date.now();
+frame.addEventListener('load',()=>window.CCTamil?.attach(frame,{tool}));
+</script>
+</body>
+</html>
