@@ -51,35 +51,14 @@ function toolUrl(t){const base=DIRECT[t.slug];return base?base+'&v='+Date.now():
 function screenBox(){return{left:Number.isFinite(screen.availLeft)?screen.availLeft:0,top:Number.isFinite(screen.availTop)?screen.availTop:0,w:screen.availWidth||1280,h:screen.availHeight||800}}
 function spec(mode){const s=screenBox();if(mode==='full')return{x:s.left+6,y:s.top+6,w:Math.max(900,s.w-12),h:Math.max(650,s.h-12)};if(mode==='half'){const w=Math.max(620,Math.round(s.w*.52));return{x:s.left+s.w-w-8,y:s.top+8,w,h:Math.max(600,s.h-16)}}const w=Math.min(500,Math.max(410,Math.round(s.w*.3))),h=Math.min(390,Math.max(300,Math.round(s.h*.34)));return{x:s.left+s.w-w-10,y:s.top+10,w,h}}
 function mark(slug,on){buttons.get(slug)?.classList.toggle('active',!!on)}
-async function openPiP(t){
-  if(!hasPiP)return false;
-  try{
-    if(pip&&!pip.closed&&pipSlug===t.slug){try{pip.focus()}catch(e){};return true}
-    if(pip&&!pip.closed){try{pip.close()}catch(e){}}
-    pip=await window.documentPictureInPicture.requestWindow({width:470,height:360});
-    pipSlug=t.slug;mark(t.slug,true);
-    const d=pip.document;d.title=t.title;d.documentElement.style.cssText='margin:0;width:100%;height:100%;overflow:hidden;background:#fff';d.body.style.cssText='margin:0;width:100%;height:100%;overflow:hidden;background:#fff';
-    const f=d.createElement('iframe');f.src=toolUrl(t);f.title=t.title;f.allow='autoplay';f.style.cssText='display:block;width:100%;height:100%;border:0;background:#fff';d.body.replaceChildren(f);
-    pip.addEventListener('pagehide',()=>{mark(t.slug,false);pip=null;pipSlug=''},{once:true});
-    return true;
-  }catch(e){pip=null;pipSlug='';mark(t.slug,false);return false}
-}
-function openPopup(t){
-  const old=windows.get(t.slug);if(old){try{if(!old.closed){old.focus();return}}catch(e){}}
-  const s=spec(t.mode),name='ClassroomCompanionTA_'+t.slug.replace(/[^a-z0-9]/gi,'_');
-  const w=window.open(toolUrl(t),name,`popup=yes,width=${s.w},height=${s.h},left=${s.x},top=${s.y},resizable=yes,scrollbars=yes,toolbar=no,location=no,menubar=no,status=no`);
-  if(!w){say('Pop-up சாளரங்களை அனுமதிக்கவும்');return}
-  windows.set(t.slug,w);mark(t.slug,true);try{w.focus()}catch(e){}
-  setTimeout(()=>{try{w.resizeTo(s.w,s.h);w.moveTo(s.x,s.y)}catch(e){}},120);
-}
-async function openTool(t){
-  if(t.mode==='mini'&&hasPiP){const ok=await openPiP(t);if(ok){say(t.title+' மிதக்கும் சாளரத்தில் திறக்கப்பட்டது');return}}
-  openPopup(t);
-}
+async function openPiP(t){if(!hasPiP)return false;try{if(pip&&!pip.closed&&pipSlug===t.slug){try{pip.focus()}catch(e){};return true}if(pip&&!pip.closed){try{pip.close()}catch(e){}}pip=await window.documentPictureInPicture.requestWindow({width:470,height:360});pipSlug=t.slug;mark(t.slug,true);const d=pip.document;d.title=t.title;d.documentElement.style.cssText='margin:0;width:100%;height:100%;overflow:hidden;background:#fff';d.body.style.cssText='margin:0;width:100%;height:100%;overflow:hidden;background:#fff';const f=d.createElement('iframe');f.src=toolUrl(t);f.title=t.title;f.allow='autoplay';f.style.cssText='display:block;width:100%;height:100%;border:0;background:#fff';d.body.replaceChildren(f);pip.addEventListener('pagehide',()=>{mark(t.slug,false);pip=null;pipSlug=''},{once:true});return true}catch(e){pip=null;pipSlug='';mark(t.slug,false);return false}}
+function openPopup(t){const old=windows.get(t.slug);if(old){try{if(!old.closed){old.focus();return}}catch(e){}}const s=spec(t.mode),name='ClassroomCompanionTA_'+t.slug.replace(/[^a-z0-9]/gi,'_');const w=window.open(toolUrl(t),name,`popup=yes,width=${s.w},height=${s.h},left=${s.x},top=${s.y},resizable=yes,scrollbars=yes,toolbar=no,location=no,menubar=no,status=no`);if(!w){say('Pop-up சாளரங்களை அனுமதிக்கவும்');return}windows.set(t.slug,w);mark(t.slug,true);try{w.focus()}catch(e){}setTimeout(()=>{try{w.resizeTo(s.w,s.h);w.moveTo(s.x,s.y)}catch(e){}},120)}
+async function openTool(t){if(t.mode==='mini'&&hasPiP){const ok=await openPiP(t);if(ok){say(t.title+' மிதக்கும் சாளரத்தில் திறக்கப்பட்டது');return}}openPopup(t)}
 for(const t of TOOLS){const b=document.createElement('button');b.type='button';b.className='tool '+t.mode;b.innerHTML=`<span class="icon">${t.icon}</span><span class="name">${t.title}</span><span class="modeDot"></span>`;b.setAttribute('aria-label',t.title);b.onclick=()=>openTool(t);grid.appendChild(b);buttons.set(t.slug,b)}
 setInterval(()=>{for(const [slug,w] of [...windows]){let closed=true;try{closed=!w||w.closed}catch(e){}if(closed){windows.delete(slug);mark(slug,false)}}},900);
 document.getElementById('closeBtn').onclick=()=>window.close();
 </script>
+<script src="extra-tools.js?v=20261007extra2"></script>
 <script src="/Classroom-Companion/language-window-parity.js?v=20261006langfull1"></script>
 </body>
 </html>
