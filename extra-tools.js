@@ -1,6 +1,6 @@
 'use strict';
-DIRECT['custom-text']='custom-text.html';
-DIRECT['whiteboard']='whiteboard.html';
+DIRECT['custom-text']='custom-text.html?edition=ta';
+DIRECT['whiteboard']='whiteboard.html?edition=ta';
 const EXTRA_TOOLS=[
  {slug:'custom-text',icon:'📝',title:'தனிப்பயன் உரை / வழிமுறைகள்',mode:'half'},
  {slug:'whiteboard',icon:'✏️',title:'வெண்பலகை',mode:'full'}
