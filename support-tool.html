@@ -4,15 +4,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>வகுப்பறை உதவியாளர் • தமிழ் பதிப்பு</title>
-<style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#fff}iframe{display:block;width:100%;height:100%;border:0;background:#fff}</style>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#fff}
+iframe{display:block;width:100%;height:100%;border:0;background:#fff}
+.teacherNote{display:none;position:fixed;left:12px;right:12px;bottom:9px;z-index:20;padding:7px 10px;border:1px solid #cfe0de;border-radius:10px;background:rgba(247,251,250,.96);color:#365b56;font-family:"Noto Sans Tamil","Nirmala UI",Latha,Inter,system-ui,sans-serif;font-size:10.5px;font-weight:800;line-height:1.35;text-align:center;box-shadow:0 5px 16px rgba(18,32,46,.08);pointer-events:none}
+.teacherNote.show{display:block}
+</style>
 </head>
 <body>
 <iframe id="sourceFrame" title="வகுப்பறை உதவியாளர்" allow="autoplay; fullscreen" allowfullscreen></iframe>
+<div class="teacherNote" id="teacherNote">குறிப்பு: துல்லியமான, பொருத்தமான தமிழ் மொழிநடைக்காக ஊக்கவுரைகளை ஆசிரியர்கள் தாங்களே உள்ளிட்டு, தேவையெனில் திருத்தலாம்.</div>
 <script src="tamil-translate.js?v=20261005ta1"></script>
 <script>
 'use strict';
 const p=new URLSearchParams(location.search),tool=p.get('tool')||'timer-calm-music',display=p.get('display')||'';
 const frame=document.getElementById('sourceFrame');
+if(tool==='quote-of-the-day')document.getElementById('teacherNote').classList.add('show');
 frame.src='/Classroom-Companion/support-tool.html?tool='+encodeURIComponent(tool)+(display?'&display='+encodeURIComponent(display):'')+'&v='+Date.now();
 frame.addEventListener('load',()=>{
   window.CCTamil?.attach(frame,{tool});
