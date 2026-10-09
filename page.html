@@ -12,13 +12,19 @@
 <script>
 'use strict';
 const raw=new URLSearchParams(location.search).get('src')||'class-organisation.html';
-const allowed=['class-organisation.html','daily-duty-roster.html','reward-points.html','configure.html','quote.html','brain-break.html','clock.html'];
+const allowed=['class-organisation.html','daily-duty-roster.html','reward-points.html','configure.html','quote.html','quote-editable.html','brain-break.html','clock.html'];
 let u;try{u=new URL(raw,'https://local.invalid/')}catch(e){u=new URL('class-organisation.html','https://local.invalid/')}
-const file=u.pathname.replace(/^\//,'');
+let file=u.pathname.replace(/^\//,'');
 if(!allowed.includes(file))u=new URL('class-organisation.html','https://local.invalid/');
+file=u.pathname.replace(/^\//,'');
+// Always use the editable quote page so the Settings gear remains available.
+if(file==='quote.html'){
+  u=new URL('quote-editable.html'+u.search,'https://local.invalid/');
+  file='quote-editable.html';
+}
 const frame=document.getElementById('sourceFrame');
 function addTamilQuoteInfo(){
-  if(file!=='quote.html')return;
+  if(file!=='quote-editable.html')return;
   try{
     const d=frame.contentDocument;
     if(!d||d.getElementById('tamilQuoteInfoBtn'))return;
@@ -50,12 +56,12 @@ function addTamilQuoteInfo(){
     controls.insertBefore(wrap,close);
   }catch(e){}
 }
-frame.src='/Classroom-Companion/'+u.pathname.replace(/^\//,'')+u.search+(u.search?'&':'?')+'v='+Date.now();
-frame.addEventListener('load',()=>{
+function refreshQuoteEnhancements(){
   window.CCTamil?.attach(frame,{page:u.pathname.replace(/^\//,'')});
-  setTimeout(addTamilQuoteInfo,80);
-  setTimeout(addTamilQuoteInfo,350);
-});
+  [80,250,550,1000,1600].forEach(ms=>setTimeout(addTamilQuoteInfo,ms));
+}
+frame.src='/Classroom-Companion/'+u.pathname.replace(/^\//,'')+u.search+(u.search?'&':'?')+'v='+Date.now();
+frame.addEventListener('load',refreshQuoteEnhancements);
 </script>
 </body>
 </html>
