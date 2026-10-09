@@ -17,8 +17,45 @@ let u;try{u=new URL(raw,'https://local.invalid/')}catch(e){u=new URL('class-orga
 const file=u.pathname.replace(/^\//,'');
 if(!allowed.includes(file))u=new URL('class-organisation.html','https://local.invalid/');
 const frame=document.getElementById('sourceFrame');
+function addTamilQuoteInfo(){
+  if(file!=='quote.html')return;
+  try{
+    const d=frame.contentDocument;
+    if(!d||d.getElementById('tamilQuoteInfoBtn'))return;
+    const controls=d.querySelector('.controls'),close=d.getElementById('close');
+    if(!controls||!close)return;
+    const wrap=d.createElement('span');
+    wrap.style.cssText='position:relative;display:inline-flex;align-items:center;justify-content:center;';
+    const btn=d.createElement('button');
+    btn.id='tamilQuoteInfoBtn';
+    btn.type='button';
+    btn.className='btn';
+    btn.textContent='ℹ️';
+    btn.title='ஆசிரியர் குறிப்பு';
+    btn.setAttribute('aria-label','ஆசிரியர் குறிப்பு');
+    btn.setAttribute('aria-expanded','false');
+    btn.style.cssText='width:40px;height:40px;min-width:40px;padding:0;border-radius:999px;font-size:18px;display:grid;place-items:center;';
+    const note=d.createElement('div');
+    note.id='tamilQuoteInfoNote';
+    note.textContent='துல்லியமான, பொருத்தமான தமிழ் மொழிநடைக்காக ஊக்கவுரைகளை ஆசிரியர்கள் தாங்களே உள்ளிட்டு, தேவையெனில் திருத்தலாம்.';
+    note.style.cssText='display:none;position:absolute;right:0;bottom:48px;z-index:50;width:min(310px,78vw);padding:10px 12px;border:1px solid #cfe0de;border-radius:13px;background:rgba(255,255,255,.98);color:#365b56;font-family:"Noto Sans Tamil","Nirmala UI",Latha,Inter,system-ui,sans-serif;font-size:11.5px;font-weight:800;line-height:1.45;text-align:left;box-shadow:0 10px 30px rgba(23,51,47,.16);';
+    btn.onclick=e=>{
+      e.preventDefault();e.stopPropagation();
+      const open=note.style.display!=='none';
+      note.style.display=open?'none':'block';
+      btn.setAttribute('aria-expanded',String(!open));
+    };
+    note.onclick=()=>{note.style.display='none';btn.setAttribute('aria-expanded','false')};
+    wrap.append(btn,note);
+    controls.insertBefore(wrap,close);
+  }catch(e){}
+}
 frame.src='/Classroom-Companion/'+u.pathname.replace(/^\//,'')+u.search+(u.search?'&':'?')+'v='+Date.now();
-frame.addEventListener('load',()=>window.CCTamil?.attach(frame,{page:u.pathname.replace(/^\//,'')}));
+frame.addEventListener('load',()=>{
+  window.CCTamil?.attach(frame,{page:u.pathname.replace(/^\//,'')});
+  setTimeout(addTamilQuoteInfo,80);
+  setTimeout(addTamilQuoteInfo,350);
+});
 </script>
 </body>
 </html>
