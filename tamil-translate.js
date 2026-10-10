@@ -42,6 +42,15 @@ const EXACT=new Map(Object.entries({
 'Who?':'யார்?','What?':'என்ன?','When?':'எப்போது?','Where?':'எங்கே?','Why?':'ஏன்?','How?':'எப்படி?','Explain':'விளக்குங்கள்','Compare':'ஒப்பிடுங்கள்','Predict':'கணிக்கவும்','What if…?':'இப்படி நடந்தால்…?','What evidence?':'என்ன ஆதாரம்?','Give a reason':'ஒரு காரணம் கூறுங்கள்','How do you know?':'எப்படித் தெரியும்?','Describe':'விவரிக்கவும்','Thinking prompt':'சிந்தனைத் தூண்டல்','Use the prompt to explain your thinking, not just give an answer.':'பதில் மட்டும் சொல்லாமல் உங்கள் சிந்தனையை விளக்க இந்தக் குறிப்பைப் பயன்படுத்துங்கள்.','↻ Spin a question':'↻ ஒரு கேள்வியைத் தேர்ந்தெடு','Use this prompt':'இந்தக் குறிப்பைப் பயன்படுத்து',
 
 'Short reset':'சிறு ஓய்வு','Move safely. Stop if anything feels uncomfortable.':'பாதுகாப்பாக அசையுங்கள். உடலில் ஏதாவது சிரமம் இருந்தால் நிறுத்துங்கள்.','▶ Start 30 sec':'▶ 30 விநாடி தொடங்கு','↻ Another break':'↻ மற்றொரு ஓய்வு','Ready to learn again':'மீண்டும் கற்கத் தயாராக உள்ளது','10 shoulder rolls':'தோள்களை 10 முறைச் சுழற்றுங்கள்','Reach high, then touch your toes':'மேலே நீட்டி, பின்னர் கால் விரல்களைத் தொடுங்கள்','Stand and stretch for 20 seconds':'நின்று 20 விநாடிகள் நீட்டுங்கள்','5 slow star jumps':'மெதுவாக 5 ஸ்டார் ஜம்ப் செய்யுங்கள்','Shake out your hands and legs':'கைகளையும் கால்களையும் அசையுங்கள்','Take 5 slow breaths':'மெதுவாக 5 முறை மூச்செடுக்கவும்','Stretch your arms wide, then relax':'கைகளை அகலமாக நீட்டி, பின்னர் தளர்த்துங்கள்'
+,
+  "Saved classes:":"சேமித்த வகுப்புகள்:",
+  "✏️ Rename Class Timetable":"✏️ வகுப்பு அட்டவணையின் பெயரை மாற்று",
+  "⬇ Export Selected Class":"⬇ தேர்ந்த வகுப்பை ஏற்றுமதி செய்",
+  "⬆ Import Selected Class":"⬆ தேர்ந்த வகுப்பை இறக்குமதி செய்",
+  "⬇ Export All":"⬇ அனைத்தையும் ஏற்றுமதி செய்",
+  "⬆ Import All":"⬆ அனைத்தையும் இறக்குமதி செய்",
+  "Add another class by pasting its timetable screenshot and saving under a new class name.":"மற்றொரு வகுப்பின் அட்டவணைப் படத்தை ஒட்டி, புதிய வகுப்புப் பெயரில் சேமிக்கவும்.",
+  "No timetables yet":"இன்னும் அட்டவணைகள் சேமிக்கப்படவில்லை"
 }));
 
 function compact(s){return String(s??'').replace(/\s+/g,' ').trim()}
