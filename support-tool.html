@@ -43,12 +43,38 @@ function addTamilTeacherNote(){
     }
   }catch(e){}
 }
+function stabiliseTamilTimetable(){
+  if(tool!=='daily-visual-timetable')return;
+  try{
+    const w=frame.contentWindow,d=frame.contentDocument;
+    if(!w||!d)return;
+    if(!w.__ccTamilTimetableStorageGuard){
+      w.__ccTamilTimetableStorageGuard=true;
+      w.addEventListener('storage',e=>{
+        if(e.key==='classroomCompanionV1'||e.key==='classroomCompanionClassMasterV1')e.stopImmediatePropagation();
+      },true);
+    }
+    if(d.getElementById('pasteZone'))return;
+    if(!w.Support||w.Support.slug!=='daily-visual-timetable'||w.__ccTamilTimetableRepairing)return;
+    w.__ccTamilTimetableRepairing=true;
+    const s=d.createElement('script');
+    s.src='/Classroom-Companion/timetable-screenshot.js?v=20261010tarepair1';
+    s.onload=()=>{w.__ccTamilTimetableRepairing=false};
+    s.onerror=()=>{w.__ccTamilTimetableRepairing=false};
+    d.body.appendChild(s);
+  }catch(e){}
+}
 frame.src='/Classroom-Companion/support-tool.html?tool='+encodeURIComponent(tool)+(display?'&display='+encodeURIComponent(display):'')+'&v='+Date.now();
 frame.addEventListener('load',()=>{
   window.CCTamil?.attach(frame,{tool});
   setTimeout(addTamilTeacherNote,120);
   setTimeout(addTamilTeacherNote,500);
   setTimeout(addTamilTeacherNote,1200);
+  if(tool==='daily-visual-timetable'){
+    setTimeout(stabiliseTamilTimetable,250);
+    setTimeout(stabiliseTamilTimetable,900);
+    setTimeout(stabiliseTamilTimetable,1800);
+  }
   if(display==='fullscreen'){
     try{
       const d=frame.contentDocument,s=d.createElement('script');
