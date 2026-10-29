@@ -8,10 +8,10 @@
 const target=new URL('/Classroom-Companion/whiteboard-smart-beta.html',location.origin);
 target.search=location.search;
 target.searchParams.set('edition','ta');
-target.searchParams.set('v','20261029-edition-route1');
+if(!target.searchParams.has('v'))target.searchParams.set('v','20261029-read1');
 target.hash=location.hash;
 location.replace(target.href);
 </script>
 </head>
-<body><a href="/Classroom-Companion/whiteboard-smart-beta.html?edition=ta&amp;v=20261029-edition-route1">வெண்பலகையைத் திற</a></body>
+<body><a href="/Classroom-Companion/whiteboard-smart-beta.html?edition=ta&amp;v=20261029-read1">வெண்பலகையைத் திற</a></body>
 </html>
