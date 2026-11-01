@@ -406,38 +406,38 @@ function stopMic(){
 }
 function fieldsFor(){
  const common=[
-  {key:'text',label:'Ayat betul / Correct sentence',wide:true,hint:'Enter a complete Malay sentence with at least four words.'}
+  {key:'text',label:'சரியான வாக்கியம் / Correct sentence',wide:true,hint:'Enter a complete Tamil sentence with at least four separate words.'}
  ];
  if(config.type==='scramble')return common;
  if(config.type==='cloze')return[
-  {key:'sentence',label:'Ayat dengan satu ___ / Sentence with one blank',wide:true,hint:'Example: Adik minum ___ selepas bermain.'},
-  {key:'answer',label:'Jawapan betul / Correct missing word'},
-  {key:'distractors',label:'Pilihan salah / Incorrect options (one per line)',multi:true,wide:true}
+  {key:'sentence',label:'கோடிட்ட வாக்கியம் / Sentence with one ___ blank',wide:true,hint:'Example: நான் ___ படிக்கிறேன்.'},
+  {key:'answer',label:'சரியான சொல் / Correct word'},
+  {key:'distractors',label:'தவறான தேர்வுகள் / Incorrect options (one per line)',multi:true,wide:true}
  ];
- if(config.type==='punctuation')return[{key:'sentence',label:'Ayat dengan satu ___ / Sentence with one blank',wide:true,hint:'Example: Siapakah nama kamu___'},
-  {key:'mark',label:'Tanda baca betul / Correct punctuation',select:['.','?','!',',']}];
- if(config.type==='sequence')return[{key:'title',label:'Tajuk cerita / Story title',wide:true},
-  {key:'lines',label:'Peristiwa mengikut urutan / Events in CORRECT order (one per line)',multi:true,wide:true,hint:'Write 3–9 Malay sentences in the correct order. Pupils will rearrange them.'}];
- if(config.type==='pairs')return[{key:'title',label:'Tajuk / Topic',wide:true},
-  {key:'pairs',label:'Padanan betul / Matching pairs (one per line)',multi:true,wide:true,hint:'Write: word | matching phrase. Example: membaca | buku'}];
- if(config.type==='doctor')return[{key:'wrong',label:'Ayat salah / Sentence with a mistake',wide:true},{key:'correct',label:'Ayat betul / Corrected sentence',wide:true},
-  {key:'distractors',label:'Dua pilihan salah / Two incorrect options (one per line)',multi:true,wide:true}];
+ if(config.type==='punctuation')return[{key:'sentence',label:'கோடிட்ட வாக்கியம் / Sentence with one ___ blank',wide:true,hint:'Example: உன் பெயர் என்ன___'},
+  {key:'mark',label:'சரியான நிறுத்தற்குறி / Correct punctuation',select:['.','?','!',',']}];
+ if(config.type==='sequence')return[{key:'title',label:'கதைத் தலைப்பு / Story title',wide:true},
+  {key:'lines',label:'நிகழ்வுகள் / Events in CORRECT order (one per line)',multi:true,wide:true,hint:'Write 3–9 Tamil event sentences in the correct order. Pupils will rearrange them.'}];
+ if(config.type==='pairs')return[{key:'title',label:'தலைப்பு / Topic',wide:true},
+  {key:'pairs',label:'சரியான பொருத்தங்கள் / Matching pairs (one per line)',multi:true,wide:true,hint:'Write: word | match. Example: பெரிய | சிறிய'}];
+ if(config.type==='doctor')return[{key:'wrong',label:'பிழையான வாக்கியம் / Incorrect sentence',wide:true},{key:'correct',label:'திருத்தப்பட்ட வாக்கியம் / Correct sentence',wide:true},
+  {key:'distractors',label:'இரண்டு தவறான தேர்வுகள் / Two incorrect options (one per line)',multi:true,wide:true}];
  if(config.type==='builder')return[
-  {key:'base',label:'Ayat asas / Short base sentence',wide:true},
-  {key:'time',label:'Masa / Correct WHEN phrase'},{key:'wrongTime',label:'Two incorrect WHEN choices / Dua pilihan salah',multi:true},
-  {key:'place',label:'Tempat / Correct WHERE phrase'},{key:'wrongPlace',label:'Two incorrect WHERE choices / Dua pilihan salah',multi:true},
-  {key:'manner',label:'Cara / Correct HOW phrase'},{key:'wrongManner',label:'Two incorrect HOW choices / Dua pilihan salah',multi:true}
+  {key:'base',label:'அடிப்படை வாக்கியம் / Short base sentence',wide:true},
+  {key:'time',label:'நேரம் / Correct WHEN word or phrase'},{key:'wrongTime',label:'தவறான நேரத் தேர்வுகள் / Two incorrect WHEN choices',multi:true},
+  {key:'place',label:'இடம் / Correct WHERE word or phrase'},{key:'wrongPlace',label:'தவறான இடத் தேர்வுகள் / Two incorrect WHERE choices',multi:true},
+  {key:'manner',label:'விதம் / Correct HOW word or phrase'},{key:'wrongManner',label:'தவறான விதத் தேர்வுகள் / Two incorrect HOW choices',multi:true}
  ];
- return [{key:'title',label:'Tajuk gambar / Scene title',wide:true},{key:'scene',label:'Gambar / Picture',select:Object.keys(sceneNames)},
-  {key:'questions',label:'Soalan panduan / Guiding questions (one per line)',multi:true,wide:true},
-  {key:'keywords',label:'Kata bantuan / Optional hint words (one per line)',multi:true,wide:true},
-  {key:'model',label:'Contoh jawapan guru / Model response',multi:true,wide:true}];
+ return [{key:'title',label:'படத் தலைப்பு / Scene title',wide:true},{key:'scene',label:'படம் / Picture',select:Object.keys(sceneNames)},
+  {key:'questions',label:'வழிகாட்டும் கேள்விகள் / Guiding questions (one per line)',multi:true,wide:true},
+  {key:'keywords',label:'உதவிச் சொற்கள் / Optional hint words (one per line)',multi:true,wide:true},
+  {key:'model',label:'மாதிரி விடை / Model response',multi:true,wide:true}];
 }
 const fieldSchema=fieldsFor();
 let editorRowCounter=0;
 function editorRow(data,number){
  const card=e('article','editor-card');card.dataset.row=String(++editorRowCounter);
- const top=e('div','editor-top'),title=e('strong',null,'Soalan '+number),moves=e('div','editor-move');
+ const top=e('div','editor-top'),title=e('strong',null,'கேள்வி '+number),moves=e('div','editor-move');
  const deleteBtn=makeButton('Remove','mini-btn danger',()=>{if($('editorList').children.length===1){setNotice('Keep at least one question.',true);return}card.remove();renumberEditors()});
  const up=makeButton('↑ Up','mini-btn',()=>{if(card.previousElementSibling){card.parentElement.insertBefore(card,card.previousElementSibling);renumberEditors()}});
  const down=makeButton('↓ Down','mini-btn',()=>{if(card.nextElementSibling){card.parentElement.insertBefore(card.nextElementSibling,card);renumberEditors()}});
@@ -502,7 +502,7 @@ function resizePicture(file){
   img.src=obj;
  });
 }
-function renumberEditors(){[...$('editorList').children].forEach((card,i)=>{const title=card.querySelector('.editor-top strong');if(title)title.textContent='Soalan '+(i+1)})}
+function renumberEditors(){[...$('editorList').children].forEach((card,i)=>{const title=card.querySelector('.editor-top strong');if(title)title.textContent='கேள்வி '+(i+1)})}
 function renderEditors(){
  const root=$('editorList');root.replaceChildren();
  items.forEach((item,i)=>root.append(editorRow(item,i+1)));
@@ -533,7 +533,7 @@ function exportJSON(){
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});
   const url=URL.createObjectURL(blob),a=document.createElement('a');
   a.href=url;a.download='Tamil-'+TYPE+'-lesson.json';document.body.append(a);a.click();a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),1200);setNotice('✓ Malay lesson exported with its questions and answers.',false);
+  setTimeout(()=>URL.revokeObjectURL(url),1200);setNotice('✓ Tamil lesson exported with its questions and answers.',false);
  }catch(err){setNotice(err.message||'Cannot export lesson.',true)}
 }
 async function importJSON(file){
@@ -541,7 +541,7 @@ async function importJSON(file){
  if(file.size>18*1024*1024){setNotice('The file is too large (maximum 18 MB).',true);return}
  try{
   const obj=JSON.parse(await file.text());
-  if(!obj||obj.app!=='TamilLearningIsland'||obj.version!==1||obj.type!==TYPE)throw Error('Wrong activity or invalid JSON format. Choose a Malay lesson for this activity.');
+  if(!obj||obj.app!=='TamilLearningIsland'||obj.version!==1||obj.type!==TYPE)throw Error('Wrong activity or invalid JSON format. Choose a Tamil lesson for this activity.');
   const incoming=validateAll(obj.items);
   const root=$('editorList');root.replaceChildren();
   incoming.forEach((q,i)=>root.append(editorRow(q,i+1)));
@@ -561,7 +561,7 @@ $('restoreExamples').onclick=()=>{
  if(!window.confirm('Replace all questions shown here with the five built-in examples?'))return;
  const root=$('editorList');root.replaceChildren();
  config.samples.forEach((q,i)=>root.append(editorRow(deep(q),i+1)));
- setNotice('Five original Malay examples loaded. Save to apply them.');
+ setNotice('Five original Tamil examples loaded. Save to apply them.');
 };
 $('exportLesson').onclick=exportJSON;
 $('importLesson').onclick=()=>$('jsonFile').click();
