@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ta-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fffaf3">
+<meta name="description" content="சொற்களை வரிசைப்படுத்து · Original primary-level Tamil learning exercises with editable bilingual teacher settings.">
+<title>சொற்களை வரிசைப்படுத்து | தமிழ் கற்றல் தீவு</title>
+<link rel="stylesheet" href="../activity.css">
+<script src="../data-ta.js" defer></script>
+<script src="../activity.js" defer></script>
+</head>
+<body data-activity="sentence-scramble">
+<header class="topbar">
+ <div class="topbar-inner">
+  <a href="../" class="island-home" aria-label="தமிழ் கற்றல் தீவுக்குத் திரும்பு">🏝️ தீவு</a>
+  <div class="logo"><span class="logo-mark" id="toolEmoji" aria-hidden="true">🧩</span>
+   <span><strong id="toolTitle">சொற்களை வரிசைப்படுத்து</strong><small>தமிழ் கற்றல் தீவு</small></span></div>
+  <button type="button" id="gearButton" class="gear" aria-pressed="false" aria-label="Teacher settings / ஆசிரியர் அமைப்புகள்" title="Teacher settings / ஆசிரியர் அமைப்புகள்"><span aria-hidden="true">⚙️</span><span class="gear-label">ஆசிரியர் அமைப்புகள்</span></button>
+ </div>
+</header>
+<main class="wrap">
+ <section id="studentArea" aria-labelledby="studentTitle">
+  <div class="student-hero">
+   <span class="badge">⭐ கற்கத் தயாரா?</span>
+   <h1 id="studentTitle">சொற்களை வரிசைப்படுத்து</h1>
+   <p id="studentSubtitle">வா, விளையாடிக் கற்கலாம்!</p>
+  </div>
+  <div id="questionStage" class="stage">
+   <div class="stage-header"><span class="progress" id="questionProgress">கேள்வி 1</span><span class="score-chip" id="scoreProgress">⭐ 0 சரி</span></div>
+   <div id="stageContent"></div><p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+   <div class="stage-actions" id="stageActions"></div>
+  </div>
+  <div id="resultsArea" class="stage" hidden></div>
+ </section>
+ <section id="teacherArea" class="teacher-panel" aria-labelledby="teacherTitle" hidden>
+  <span class="badge">⚙️ ஆசிரியர் பகுதி / Teacher workspace</span>
+  <h2 id="teacherTitle">ஆசிரியர் அமைப்புகள் · Teacher Settings</h2>
+  <p class="teacher-intro"><strong>For teachers:</strong> Edit the five original Tamil example questions, add your own, or import a verified lesson. Pupils see Question 1 directly; teacher settings stay hidden until you click ⚙️. Select <strong>Save &amp; Play</strong> to return to Question 1.<br>
+  <strong>Important:</strong> Questions are saved on this device and browser only. Use <strong>Export JSON</strong> to back up or share your lesson. No textbook passages have been reproduced. Tamil speech is optional and depends on installed voices.</p>
+  <p class="language-note" style="font-size:13px;line-height:1.6;color:#607c7f;background:#f6faf8;border-left:3px solid #aecfc1;padding:11px 13px;border-radius:8px;"><strong>Language note:</strong> A note from the creator: I do not speak Tamil. These original sample exercises were prepared with care, but mistakes may remain. If you notice an error, please feel free to correct or replace the exercises using ⚙️ Teacher Settings. Thank you for sharing your expertise.</p>
+  <div class="teacher-toolbar">
+   <button type="button" id="addQuestion" class="btn secondary">＋ கேள்வி சேர் / Add</button>
+   <button type="button" id="restoreExamples" class="btn secondary">📚 5 மாதிரிகள் / Examples</button>
+   <button type="button" id="exportLesson" class="btn secondary">⬇ Export JSON</button>
+   <button type="button" id="importLesson" class="btn secondary">⬆ Import JSON</button>
+   <input id="jsonFile" class="file-hidden" type="file" accept=".json,application/json" aria-label="Choose lesson JSON file">
+  </div>
+  <p id="notice" class="teacher-status" role="status" aria-live="polite"></p>
+  <div id="editorList"></div>
+  <div class="teacher-foot">
+   <button type="button" id="savePlay" class="btn primary">✓ சேமித்துத் தொடங்கு / Save &amp; Play</button>
+   <button type="button" id="cancelTeacher" class="btn secondary">↩ திரும்பு / Cancel</button>
+  </div>
+ </section>
+</main>
+<footer class="page-footer">தமிழ் கற்றல் தீவு · Created by Lim Kim Sze · Original example questions, not copied from textbooks</footer>
+</body>
+</html>
