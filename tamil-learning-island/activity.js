@@ -114,8 +114,8 @@ function renderStudent(){
  $('toolEmoji').textContent=config.emoji;
  $('studentTitle').textContent=config.title;
  $('studentSubtitle').textContent=config.subtitle;
- $('questionProgress').textContent='Soalan '+(index+1)+' daripada '+items.length;
- $('scoreProgress').textContent=config.type==='picture'?'Latihan bertutur':'⭐ '+score+' betul';
+ $('questionProgress').textContent='கேள்வி '+(index+1)+' / '+items.length;
+ $('scoreProgress').textContent=config.type==='picture'?'பேச்சுப் பயிற்சி':'⭐ '+score+' சரி';
  $('stageContent').replaceChildren();
  $('feedback').className='feedback';$('feedback').textContent='';
  $('stageActions').replaceChildren();
@@ -133,21 +133,21 @@ function renderStudent(){
 function heading(text){studentRoot().append(e('p','instruction',text))}
 function textPanel(text,cls){studentRoot().append(e('div',cls||'question-text',text))}
 function actions(list){$('stageActions').replaceChildren(...list)}
-function addNext(){actions([makeButton(index+1<items.length?'Soalan seterusnya →':'Lihat keputusan →','btn primary',nextQuestion)])}
+function addNext(){actions([makeButton(index+1<items.length?'அடுத்த கேள்வி →':'முடிவைப் பார் →','btn primary',nextQuestion)])}
 function nextQuestion(){stopMic();completed++;if(index+1<items.length){index++;renderStudent()}else showResults()}
-function completeCorrect(){score++;$('scoreProgress').textContent='⭐ '+score+' betul';feedback('Bagus! Jawapan kamu betul! ⭐','good');addNext()}
-function markWrong(){feedback('Belum tepat. Cuba lagi! Kamu pasti boleh.','bad')}
+function completeCorrect(){score++;$('scoreProgress').textContent='⭐ '+score+' சரி';feedback('நன்று! சரியான விடை! ⭐','good');addNext()}
+function markWrong(){feedback('மீண்டும் முயற்சி செய்! உன்னால் முடியும்.','bad')}
 function showResults(){
  $('questionStage').hidden=true;$('resultsArea').hidden=false;
  const t=config.type==='picture';
  const root=$('resultsArea');root.replaceChildren();
  const box=e('div','full-result');
- box.append(e('div','trophy',t?'🎤':'🏆'),e('h2',null,t?'Syabas! Kamu berani bercerita!':'Tahniah! Aktiviti selesai!'));
- box.append(e('p',null,t?'Kamu telah melihat '+completed+' gambar dan berlatih bercerita.':'Kamu telah menjawab '+completed+' soalan.'));
- if(!t)box.append(e('strong',null,score+' / '+items.length+' betul'));
- box.append(e('p',null,'Teruskan berlatih. Kamu semakin pandai!'));
+ box.append(e('div','trophy',t?'🎤':'🏆'),e('h2',null,t?'நன்று! அழகாகப் பேசினாய்!':'வாழ்த்துகள்! பயிற்சி முடிந்தது!'));
+ box.append(e('p',null,t?'நீ '+completed+' படங்களைப் பார்த்துப் பேசிப் பயிற்சி செய்தாய்.':'நீ '+completed+' கேள்விகளுக்குப் பதில் அளித்தாய்.'));
+ if(!t)box.append(e('strong',null,score+' / '+items.length+' சரி'));
+ box.append(e('p',null,'தொடர்ந்து பயிற்சி செய். நீ சிறப்பாகக் கற்கிறாய்!'));
  const buttons=e('div','stage-actions');
- buttons.append(makeButton('🔄 Main semula','btn primary',resetStudent),makeButton('🏝️ Kembali ke pulau','btn secondary',()=>{location.href='../'}));
+ buttons.append(makeButton('🔄 மீண்டும் விளையாடு','btn primary',resetStudent),makeButton('🏝️ தீவுக்குத் திரும்பு','btn secondary',()=>{location.href='../'}));
  box.append(buttons);root.append(box);
 }
 function shuffleDifferent(list){
@@ -160,8 +160,8 @@ function renderScramble(){
  const deck=shuffleDifferent(target.map((word,i)=>({word,id:i})));
  const selected=[];
  heading('🧩 '+config.prompt);
- const answer=e('div','drop-zone empty');answer.setAttribute('aria-label','Ayat kamu');
- studentRoot().append(e('div','group-label','AYAT KAMU'),answer,e('div','group-label','TEKAN PERKATAAN'));
+ const answer=e('div','drop-zone empty');answer.setAttribute('aria-label','உன் வாக்கியம்');
+ studentRoot().append(e('div','group-label','உன் வாக்கியம்'),answer,e('div','group-label','சொற்களைத் தொடு'));
  const choices=e('div','pill-row');studentRoot().append(choices);
  const display=()=>{
   answer.classList.toggle('empty',!selected.length);
@@ -169,13 +169,13 @@ function renderScramble(){
   choices.replaceChildren(...deck.filter(token=>!selected.includes(token)).map(token=>makeButton(token.word,'tile',()=>{selected.push(token);display()})));
  };
  display();
- const submit=makeButton('Semak ayat ✓','btn primary',()=>{
-  if(selected.length!==target.length){feedback('Tekan semua perkataan dahulu.','note');return}
+ const submit=makeButton('வாக்கியத்தைச் சரிபார் ✓','btn primary',()=>{
+  if(selected.length!==target.length){feedback('முதலில் எல்லாச் சொற்களையும் தொடு.','note');return}
   if(selected.map(x=>x.word).join(' ')===target.join(' ')){completeCorrect();submit.disabled=true;answer.querySelectorAll('button').forEach(b=>b.disabled=true);choices.replaceChildren()}
   else markWrong();
  });
- actions([submit,makeButton('Padam','btn secondary',()=>{selected.splice(0);display();feedback('')}),
-  makeButton('🔊 Dengar ayat','btn secondary',()=>speaker(items[index].text))]);
+ actions([submit,makeButton('அழி','btn secondary',()=>{selected.splice(0);display();feedback('')}),
+  makeButton('🔊 வாக்கியத்தைக் கேள்','btn secondary',()=>speaker(items[index].text))]);
 }
 function renderChoices(options,correct,after,extra){
  const box=e('div','options');studentRoot().append(box);
@@ -201,20 +201,20 @@ function renderCloze(){
  txt.append(document.createTextNode(left),e('span','', '_____'),document.createTextNode(right));
  studentRoot().append(txt);
  renderChoices([q.answer,...q.distractors],q.answer);
- actions([makeButton('🔊 Dengar ayat','btn secondary',()=>speaker(q.sentence.replace('___',q.answer)))]);
+ actions([makeButton('🔊 வாக்கியத்தைக் கேள்','btn secondary',()=>speaker(q.sentence.replace('___',q.answer)))]);
 }
 function renderPunctuation(){
  const q=items[index];
  heading('🔎 '+config.prompt);
  const box=e('div','question-text',q.sentence.replace('___',' □ '));studentRoot().append(box);
  renderChoices(['.','?','!',','],q.mark);
- actions([makeButton('🔊 Dengar ayat penuh','btn secondary',()=>speaker(q.sentence.replace('___',q.mark)))]);
+ actions([makeButton('🔊 முழு வாக்கியத்தைக் கேள்','btn secondary',()=>speaker(q.sentence.replace('___',q.mark)))]);
 }
 function renderSequence(){
  const q=items[index],ordered=q.lines;
  let tokens=shuffleDifferent(ordered.map((text,i)=>({text,id:i})));
  heading('📚 '+config.prompt);
- studentRoot().append(e('div','group-label',q.title||'Susun peristiwa mengikut urutan'));
+ studentRoot().append(e('div','group-label',q.title||'நிகழ்வுகளை வரிசைப்படுத்து'));
  const container=e('div');studentRoot().append(container);
  const draw=()=>{
   container.replaceChildren();
@@ -226,11 +226,11 @@ function renderSequence(){
    container.append(row);
   });
  };draw();
- const submit=makeButton('Semak susunan ✓','btn primary',()=>{
+ const submit=makeButton('வரிசையைச் சரிபார் ✓','btn primary',()=>{
   if(tokens.every((token,i)=>token.id===i)){completeCorrect();submit.disabled=true}
   else markWrong();
  });
- actions([submit,makeButton('🔊 Dengar cerita','btn secondary',()=>speaker(q.lines.join(' ')))]);
+ actions([submit,makeButton('🔊 கதையைக் கேள்','btn secondary',()=>speaker(q.lines.join(' ')))]);
 }
 function renderPairs(){
  const q=items[index],matched=new Set();
@@ -238,24 +238,24 @@ function renderPairs(){
  heading('🤝 '+config.prompt);
  studentRoot().append(e('div','group-label',q.title));
  const grid=e('div','match-grid'),leftCol=e('div','match-col'),rightCol=e('div','match-col');
- const leftCaption=e('div','match-caption','Pilih perkataan'),rightCaption=e('div','match-caption','Pilih padanan');
+ const leftCaption=e('div','match-caption','சொல்லைத் தேர்ந்தெடு'),rightCaption=e('div','match-caption','பொருத்தத்தைத் தேர்ந்தெடு');
  leftCol.append(leftCaption);rightCol.append(rightCaption);
  const rightOrder=shuffleDifferent(q.pairs.map((_,i)=>i));
  const draw=()=>{
   while(leftCol.children.length>1)leftCol.lastElementChild.remove();
   while(rightCol.children.length>1)rightCol.lastElementChild.remove();
   q.pairs.forEach((pair,i)=>{
-   const b=makeButton(pair[0],'match-choice',()=>{chosenLeft=i;draw();feedback('Sekarang pilih padanan di sebelah kanan.','note')});
+   const b=makeButton(pair[0],'match-choice',()=>{chosenLeft=i;draw();feedback('இப்போது வலப்புறத்தில் பொருத்தமான சொல்லைத் தேர்ந்தெடு.','note')});
    b.disabled=matched.has(i);if(matched.has(i))b.classList.add('done');
    if(chosenLeft===i)b.classList.add('active');
    leftCol.append(b);
   });
   rightOrder.forEach(i=>{
    const b=makeButton(q.pairs[i][1],'match-choice',()=>{
-    if(chosenLeft<0){feedback('Pilih perkataan di sebelah kiri dahulu.','note');return}
+    if(chosenLeft<0){feedback('முதலில் இடப்புறத்தில் ஒரு சொல்லைத் தேர்ந்தெடு.','note');return}
     if(chosenLeft===i){
      matched.add(i);chosenLeft=-1;
-     if(matched.size===q.pairs.length){completeCorrect()}else feedback('Bagus! '+matched.size+' daripada '+q.pairs.length+' pasangan betul.','good');
+     if(matched.size===q.pairs.length){completeCorrect()}else feedback('நன்று! '+matched.size+' / '+q.pairs.length+' பொருத்தங்கள் சரி.','good');
      draw();
     }else markWrong();
    });
@@ -267,11 +267,11 @@ function renderPairs(){
 }
 function renderDoctor(){
  const q=items[index];heading('🩺 '+config.prompt);
- studentRoot().append(e('div','group-label','Ayat ini perlu dibetulkan:'));
+ studentRoot().append(e('div','group-label','இந்த வாக்கியத்தில் பிழை உள்ளது:'));
  const wrong=e('div','question-text sentence-strike',q.wrong);studentRoot().append(wrong);
- studentRoot().append(e('div','group-label','Pilih ayat yang betul'));
+ studentRoot().append(e('div','group-label','சரியான வாக்கியத்தைத் தேர்ந்தெடு'));
  renderChoices([q.correct,...q.distractors],q.correct);
- actions([makeButton('🔊 Dengar ayat yang betul','btn secondary',()=>speaker(q.correct))]);
+ actions([makeButton('🔊 சரியான வாக்கியத்தைக் கேள்','btn secondary',()=>speaker(q.correct))]);
 }
 function buildExpanded(q){
  const bits=q.base.replace(/[.!?]\s*$/,'').trim().split(/\s+/);
@@ -280,28 +280,28 @@ function buildExpanded(q){
 }
 function renderBuilder(){
  const q=items[index],phases=[
- {title:'BILA? (Masa)',answer:q.time,options:[q.time,...q.wrongTime]},
- {title:'DI MANA? (Tempat)',answer:q.place,options:[q.place,...q.wrongPlace]},
- {title:'BAGAIMANA? (Cara)',answer:q.manner,options:[q.manner,...q.wrongManner]}
+ {title:'எப்போது? (நேரம்)',answer:q.time,options:[q.time,...q.wrongTime]},
+ {title:'எங்கே? (இடம்)',answer:q.place,options:[q.place,...q.wrongPlace]},
+ {title:'எப்படி? (விதம்)',answer:q.manner,options:[q.manner,...q.wrongManner]}
  ];
  let phase=0,missed=false;
  heading('✨ '+config.prompt);
  textPanel(q.base.replace(/[.!?]\s*$/,'')+'.');
- const holder=e('div','builder-block'),summary=e('div','builder-output','Mari kembangkan ayat!');
+ const holder=e('div','builder-block'),summary=e('div','builder-output','வாக்கியத்தை விரிவாக்குவோம்!');
  studentRoot().append(summary,holder);
  const showPhase=()=>{
   if(phase>=3){
    summary.textContent=buildExpanded(q);
-   holder.replaceChildren(e('h3',null,'Ayat kamu semakin lengkap! 🌈'));
-   if(!missed){score++;$('scoreProgress').textContent='⭐ '+score+' betul';}
-   feedback('Syabas! Kamu telah menambah masa, tempat dan cara.','good');addNext();return;
+   holder.replaceChildren(e('h3',null,'உன் வாக்கியம் இன்னும் சிறப்பாக உள்ளது! 🌈'));
+   if(!missed){score++;$('scoreProgress').textContent='⭐ '+score+' சரி';}
+   feedback('நன்று! நேரம், இடம், விதம் ஆகியவற்றைச் சேர்த்தாய்.','good');addNext();return;
   }
   const part=phases[phase];
-  holder.replaceChildren(e('h3',null,(phase+1)+' daripada 3 — '+part.title));
+  holder.replaceChildren(e('h3',null,(phase+1)+' / 3 — '+part.title));
   const buttons=e('div','options');holder.append(buttons);
   shuffleDifferent(part.options).forEach(option=>{
    buttons.append(makeButton(option,'option',()=>{
-    if(option===part.answer){phase++;feedback('Bagus! Pilihan yang tepat!','good');showPhase()}
+    if(option===part.answer){phase++;feedback('சிறப்பு! சரியான தேர்வு!','good');showPhase()}
     else{missed=true;markWrong()}
    }))
   });
@@ -357,25 +357,25 @@ function renderPicture(){
  const prompts=e('ol','question-list');q.questions.forEach(x=>prompts.append(e('li',null,x)));
  studentRoot().append(prompts);
  const keywords=e('div','keyword-row');q.keywords.forEach(word=>keywords.append(e('span','keyword',word)));
- const kwToggle=makeButton('💡 Lihat kata bantuan','btn secondary',()=>{keywords.hidden=!keywords.hidden;kwToggle.textContent=keywords.hidden?'💡 Lihat kata bantuan':'Sembunyikan kata bantuan'});
+ const kwToggle=makeButton('💡 உதவிச் சொற்கள்','btn secondary',()=>{keywords.hidden=!keywords.hidden;kwToggle.textContent=keywords.hidden?'💡 உதவிச் சொற்கள்':'உதவிச் சொற்களை மறை'});
  keywords.hidden=true;studentRoot().append(kwToggle,keywords);
- studentRoot().append(e('div','group-label','Ceritakan pendapat kamu'));
+ studentRoot().append(e('div','group-label','உன் கருத்தைக் கூறு'));
  const response=e('textarea','oral-area');
- response.setAttribute('aria-label','Tulis jawapan kamu jika mahu');
- response.placeholder='Kamu boleh menaip di sini atau bercerita dengan suara kamu.';
+ response.setAttribute('aria-label','விரும்பினால் இங்கே எழுதலாம்');
+ response.placeholder='இங்கே எழுதலாம் அல்லது வாயால் சொல்லலாம்.';
  studentRoot().append(response);
- const oralStatus=e('p','feedback note','Jika mikrofon tidak tersedia, kamu masih boleh bercerita tanpa rakaman.');
+ const oralStatus=e('p','feedback note','ஒலிப்பதிவு இல்லாமலும் நீ பேசிப் பயிற்சி செய்யலாம்.');
  studentRoot().append(oralStatus);
  const checks=e('div','oral-checks');
- for(const [key,label] of [['looked','Saya menerangkan perkara yang saya lihat'],['details','Saya menggunakan ayat yang lengkap'],['kind','Saya bercerita dengan jelas']]){
+ for(const [key,label] of [['looked','நான் பார்த்ததை விவரித்தேன்'],['details','நான் முழு வாக்கியங்களில் பேசினேன்'],['kind','நான் தெளிவாகப் பேசினேன்']]){
   const check=e('input');check.type='checkbox';check.id='oral-'+key;const lab=e('label');lab.htmlFor=check.id;lab.append(check,document.createTextNode(label));checks.append(lab);
  }studentRoot().append(checks);
- const modelBox=e('div','builder-block');modelBox.hidden=true;modelBox.append(e('h3',null,'Contoh jawapan'),e('p','story-text',q.model));
+ const modelBox=e('div','builder-block');modelBox.hidden=true;modelBox.append(e('h3',null,'மாதிரி விடை'),e('p','story-text',q.model));
  studentRoot().append(modelBox);
- const micBtn=makeButton('🎙️ Mula bercakap','btn secondary',()=>{
+ const micBtn=makeButton('🎙️ பேசத் தொடங்கு','btn secondary',()=>{
   const API=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!API){oralStatus.textContent='Pengecaman suara tidak tersedia. Kamu masih boleh bercerita atau menaip.';return}
-  if(recognition){stopMic();micBtn.textContent='🎙️ Mula bercakap';oralStatus.textContent='Rakaman dihentikan.';return}
+  if(!API){oralStatus.textContent='குரல் பதிவு கிடைக்கவில்லை. நீ வாயால் சொல்லலாம் அல்லது எழுதலாம்.';return}
+  if(recognition){stopMic();micBtn.textContent='🎙️ பேசத் தொடங்கு';oralStatus.textContent='பதிவு நிறுத்தப்பட்டது.';return}
   try{
    const rec=new API();rec.lang='ta-SG';rec.continuous=true;rec.interimResults=true;
    let base=normal(response.value);if(base)base+=' ';
@@ -387,17 +387,17 @@ function renderPicture(){
     }
     response.value=(base+final+interim).trim();
    };
-   rec.onerror=()=>{oralStatus.textContent='Mikrofon tidak tersedia. Kamu masih boleh bercerita.';recognition=null;micBtn.textContent='🎙️ Mula bercakap'};
-   rec.onend=()=>{recognition=null;micBtn.textContent='🎙️ Mula bercakap'};
+   rec.onerror=()=>{oralStatus.textContent='ஒலிவாங்கி கிடைக்கவில்லை. நீ வாயால் சொல்லிப் பயிற்சி செய்யலாம்.';recognition=null;micBtn.textContent='🎙️ பேசத் தொடங்கு'};
+   rec.onend=()=>{recognition=null;micBtn.textContent='🎙️ பேசத் தொடங்கு'};
    recognition=rec;rec.start();
-   micBtn.textContent='⏹ Hentikan rakaman';oralStatus.textContent='Sedang mendengar Bahasa Melayu. Sila bercakap dengan jelas.';
-  }catch(err){recognition=null;oralStatus.textContent='Mikrofon tidak dapat digunakan. Sila bercerita atau menaip.'}
+   micBtn.textContent='⏹ பதிவை நிறுத்து';oralStatus.textContent='தமிழில் தெளிவாகப் பேசு. குரலைக் கேட்கிறேன்.';
+  }catch(err){recognition=null;oralStatus.textContent='ஒலிவாங்கி வேலை செய்யவில்லை. வாயால் சொல் அல்லது எழுது.'}
  });
- const finish=makeButton('Saya sudah bercerita ✓','btn primary',()=>{
-  stopMic();micBtn.textContent='🎙️ Mula bercakap';
+ const finish=makeButton('நான் பேசி முடித்தேன் ✓','btn primary',()=>{
+  stopMic();micBtn.textContent='🎙️ பேசத் தொடங்கு';
   modelBox.hidden=false;
-  feedback('Syabas kerana berani bercerita! Baca contoh jawapan dan cuba lagi.','good');
-  actions([makeButton('🔊 Dengar contoh','btn secondary',()=>speaker(q.model)),makeButton(index+1<items.length?'Gambar seterusnya →':'Tamatkan latihan →','btn primary',nextQuestion)]);
+  feedback('நன்று! மாதிரி விடையைப் பார்த்து மீண்டும் முயற்சி செய்.','good');
+  actions([makeButton('🔊 மாதிரி விடையைக் கேள்','btn secondary',()=>speaker(q.model)),makeButton(index+1<items.length?'அடுத்த படம் →':'பயிற்சியை முடி →','btn primary',nextQuestion)]);
  });
  actions([micBtn,finish]);
 }
